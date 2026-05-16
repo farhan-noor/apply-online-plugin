@@ -84,10 +84,13 @@
     $tbody.empty();
 
     const tpl = $wrap.find(".aol-ad-fb-v2-row-template")[0];
+    if (!tpl) return;
+
     schema.forEach((f, idx) => {
       const $row = $($(tpl.content).children()[0].cloneNode(true));
       $row.attr("data-idx", idx);
       $row.find(".col-required").text(f.required ? "Yes" : "No");
+      $row.find(".aol-ad-fb-v2-add--inline").attr("data-insert-at", String(idx + 1));
       renderFieldPreview($row, f);
       $tbody.append($row);
     });
@@ -210,6 +213,9 @@
     const f = field || {};
 
     $wrap.data("editIdx", typeof idx === "number" ? idx : null);
+    if (typeof idx === "number") {
+      $wrap.data("insertAt", null);
+    }
 
     $wrap.find(".aol-ad-fb-v2-id").val(f.id || "");
     $wrap.find(".aol-ad-fb-v2-label").val(f.label || "");
@@ -266,6 +272,13 @@
       renderRows($wrap);
 
       $wrap.on("click", ".aol-ad-fb-v2-add", function () {
+        const raw = $(this).attr("data-insert-at");
+        if (raw !== undefined && raw !== "") {
+          const n = parseInt(raw, 10);
+          $wrap.data("insertAt", isNaN(n) ? null : n);
+        } else {
+          $wrap.data("insertAt", null);
+        }
         openFieldEditor($wrap, { type: "text" }, null);
       });
 
@@ -278,7 +291,7 @@
       // Row click-to-edit
       $wrap.on("click", "tr.aol-ad-fb-v2-row", function (e) {
         const $t = $(e.target);
-        if ($t.closest(".col-actions").length) return;
+        if ($t.closest(".aol-ad-fb-v2-row__panel").length) return;
         const idx = parseInt($(this).attr("data-idx"), 10);
         const schema = parseSchema($wrap);
         openFieldEditor($wrap, schema[idx], idx);
@@ -322,25 +335,34 @@
       });
 
       $wrap.on("click", ".aol-ad-fb-v2-close, .aol-ad-fb-v2-cancel", function () {
+        $wrap.data("insertAt", null);
         hideModal($wrap);
       });
 
       $wrap.on("click", ".aol-ad-fb-v2-modal", function (e) {
-        if (e.target === this) hideModal($wrap);
+        if (e.target === this) {
+          $wrap.data("insertAt", null);
+          hideModal($wrap);
+        }
       });
 
       $wrap.on("click", ".aol-ad-fb-v2-save", function () {
         try {
           const schema = parseSchema($wrap);
           const idx = $wrap.data("editIdx");
+          const insertAt = $wrap.data("insertAt");
           const f = readFieldFromEditor($wrap);
 
           if (typeof idx === "number" && idx !== null) {
             schema[idx] = f;
+          } else if (typeof insertAt === "number" && !isNaN(insertAt)) {
+            const at = Math.max(0, Math.min(insertAt, schema.length));
+            schema.splice(at, 0, f);
           } else {
             schema.push(f);
           }
 
+          $wrap.data("insertAt", null);
           writeSchema($wrap, schema);
           hideModal($wrap);
           renderRows($wrap);

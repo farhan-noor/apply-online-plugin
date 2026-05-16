@@ -106,18 +106,40 @@ class AOL_Ad_Form_Builder_V2 {
 						<th class="col-order"></th>
 						<th><?php esc_html_e( 'Field', 'apply-online' ); ?></th>
 						<th><?php esc_html_e( 'Required', 'apply-online' ); ?></th>
-						<th><?php esc_html_e( 'Actions', 'apply-online' ); ?></th>
 					</tr>
 				</thead>
 				<tbody class="aol-ad-fb-v2-rows"></tbody>
 			</table>
-
 			<template class="aol-ad-fb-v2-row-template">
 				<tr class="aol-ad-fb-v2-row" tabindex="0" role="button">
 					<td class="col-order">
 						<span class="dashicons dashicons-menu"></span>
 					</td>
 					<td class="col-field">
+						<div class="aol-ad-fb-v2-row__panel">
+							<div class="aol-ad-fb-v2-row__panel-inner">
+								<button type="button" class="button button-small aol-ad-fb-v2-icon-btn aol-ad-fb-v2-edit" aria-label="<?php esc_attr_e( 'Edit', 'apply-online' ); ?>">
+									<span class="dashicons dashicons-edit" aria-hidden="true"></span>
+									<span class="screen-reader-text"><?php esc_html_e( 'Edit', 'apply-online' ); ?></span>
+								</button>
+								<button type="button" class="button button-small aol-ad-fb-v2-icon-btn aol-ad-fb-v2-delete" aria-label="<?php esc_attr_e( 'Delete', 'apply-online' ); ?>">
+									<span class="dashicons dashicons-trash" aria-hidden="true"></span>
+									<span class="screen-reader-text"><?php esc_html_e( 'Delete', 'apply-online' ); ?></span>
+								</button>
+								<button type="button" class="button button-small aol-ad-fb-v2-icon-btn aol-ad-fb-v2-up" aria-label="<?php esc_attr_e( 'Move up', 'apply-online' ); ?>">
+									<span class="dashicons dashicons-arrow-up-alt2" aria-hidden="true"></span>
+									<span class="screen-reader-text"><?php esc_html_e( 'Move up', 'apply-online' ); ?></span>
+								</button>
+								<button type="button" class="button button-small aol-ad-fb-v2-icon-btn aol-ad-fb-v2-down" aria-label="<?php esc_attr_e( 'Move down', 'apply-online' ); ?>">
+									<span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span>
+									<span class="screen-reader-text"><?php esc_html_e( 'Move down', 'apply-online' ); ?></span>
+								</button>
+								<button type="button" class="button button-primary button-small aol-ad-fb-v2-icon-btn aol-ad-fb-v2-add aol-ad-fb-v2-add--inline" data-insert-at="" aria-label="<?php esc_attr_e( 'Add new field', 'apply-online' ); ?>">
+									<span class="dashicons dashicons-plus-alt2" aria-hidden="true"></span>
+									<span class="screen-reader-text"><?php esc_html_e( 'Add new field', 'apply-online' ); ?></span>
+								</button>
+							</div>
+						</div>
 						<div class="aol-ad-fb-v2-preview">
 							<div class="aol-ad-fb-v2-preview__meta">
 								<span class="aol-ad-fb-v2-preview__label"></span>
@@ -128,12 +150,6 @@ class AOL_Ad_Form_Builder_V2 {
 						</div>
 					</td>
 					<td class="col-required"></td>
-					<td class="col-actions">
-						<button type="button" class="button button-small aol-ad-fb-v2-edit"><?php esc_html_e( 'Edit', 'apply-online' ); ?></button>
-						<button type="button" class="button button-small aol-ad-fb-v2-delete"><?php esc_html_e( 'Delete', 'apply-online' ); ?></button>
-						<button type="button" class="button button-small aol-ad-fb-v2-up" aria-label="<?php esc_attr_e( 'Move up', 'apply-online' ); ?>">↑</button>
-						<button type="button" class="button button-small aol-ad-fb-v2-down" aria-label="<?php esc_attr_e( 'Move down', 'apply-online' ); ?>">↓</button>
-					</td>
 				</tr>
 			</template>
 
@@ -145,13 +161,17 @@ class AOL_Ad_Form_Builder_V2 {
 					</div>
 
 					<div class="aol-ad-fb-v2-modal__body">
-						<div class="aol-ad-fb-v2-section">
-							<div class="aol-ad-fb-v2-section__title"><?php esc_html_e( 'Field type', 'apply-online' ); ?></div>
-							<div class="aol-ad-fb-v2-type-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Field types', 'apply-online' ); ?>"></div>
-							<input type="hidden" class="aol-ad-fb-v2-type" value="text" />
-						</div>
-
-						<div class="aol-ad-fb-v2-grid">
+						<div class="aol-ad-fb-v2-modal__columns">
+							<div class="aol-ad-fb-v2-modal__col aol-ad-fb-v2-modal__col--types">
+								<div class="aol-ad-fb-v2-section">
+									<div class="aol-ad-fb-v2-section__title"><?php esc_html_e( 'Field type', 'apply-online' ); ?></div>
+									<div class="aol-ad-fb-v2-type-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Field types', 'apply-online' ); ?>"></div>
+									<input type="hidden" class="aol-ad-fb-v2-type" value="text" />
+								</div>
+							</div>
+							<div class="aol-ad-fb-v2-modal__col aol-ad-fb-v2-modal__col--settings">
+								<div class="aol-ad-fb-v2-section__title aol-ad-fb-v2-settings__title"><?php esc_html_e( 'Field settings', 'apply-online' ); ?></div>
+								<div class="aol-ad-fb-v2-grid">
 							<label>
 								<span><?php esc_html_e( 'Unique ID', 'apply-online' ); ?> *</span>
 								<input type="text" class="regular-text aol-ad-fb-v2-id" placeholder="first_name" />
@@ -183,7 +203,7 @@ class AOL_Ad_Form_Builder_V2 {
 								<small class="description"><?php esc_html_e( 'Comma separated.', 'apply-online' ); ?></small>
 							</label>
 
-							<label class="aol-ad-fb-v2-only aol-ad-fb-v2-only--paragraph">
+							<label class="aol-ad-fb-v2-only aol-ad-fb-v2-only--paragraph aol-ad-fb-v2-span-2">
 								<span><?php esc_html_e( 'Paragraph text', 'apply-online' ); ?></span>
 								<textarea class="large-text aol-ad-fb-v2-text" rows="4"></textarea>
 							</label>
@@ -202,6 +222,8 @@ class AOL_Ad_Form_Builder_V2 {
 								<span><?php esc_html_e( 'Max size (MB)', 'apply-online' ); ?></span>
 								<input type="number" class="small-text aol-ad-fb-v2-file-max-size" min="0" />
 							</label>
+								</div>
+							</div>
 						</div>
 					</div>
 
@@ -342,6 +364,7 @@ class AOL_Ad_Form_Builder_V2 {
 
 	private function field_type_icons() {
 		return array(
+			'name'		=> 'dashicons-user',
 			'text'      => 'dashicons-editor-textcolor',
 			'text_area' => 'dashicons-format-aside',
 			'number'    => 'dashicons-editor-ol',
@@ -408,9 +431,7 @@ class AOL_Ad_Form_Builder_V2 {
 				'limit'              => isset( $val['limit'] ) ? (int) $val['limit'] : 0,
 			);
 		}
-
 		return $fields;
 	}
 }
 endif;
-
